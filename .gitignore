@@ -1,0 +1,9 @@
+/tmp/*
+/tmp/sockets/*
+!/tmp/sockets/
+!/tmp/sockets/.gitkeep
+
+/var/*
+/var/log/*
+!/var/log/
+!/var/log/.gitkeep

@@ -1,0 +1,25 @@
+services:
+  ruby:
+    container_name: ruby-simple-dev-env-ruby
+    build:
+      context: .
+      dockerfile: ./docker/ruby/Dockerfile
+    volumes:
+      - .:/ruby-simple-dev-env
+      - tmp:/ruby-simple-dev-env/tmp
+    # tty: true
+    command: sh -c "ruby config/reload_server.rb | tee var/log/reload_server.log & bundle exec puma -C config/puma.rb config/config.ru"
+  nginx:
+    container_name: ruby-simple-dev-env-nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - tmp:/ruby-simple-dev-env/tmp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ruby
+
+volumes:
+  tmp:
